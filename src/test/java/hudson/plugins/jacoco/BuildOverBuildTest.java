@@ -42,7 +42,6 @@ public class BuildOverBuildTest {
         jacocoDeltaCoverageResultSummary_1.setLineCoverage(21.523f);
         jacocoDeltaCoverageResultSummary_1.setBranchCoverage(0f);
         jacocoDeltaCoverageResultSummary_1.setComplexityCoverage(1.34f);
-        jacocoDeltaCoverageResultSummary_1.setCoverageBetterThanPrevious(false);
 
         jacocoDeltaCoverageResultSummary_2 = new JacocoDeltaCoverageResultSummary();
         jacocoDeltaCoverageResultSummary_2.setInstructionCoverage(7.54f);
@@ -51,7 +50,6 @@ public class BuildOverBuildTest {
         jacocoDeltaCoverageResultSummary_2.setLineCoverage(7.8921f);
         jacocoDeltaCoverageResultSummary_2.setBranchCoverage(0f);
         jacocoDeltaCoverageResultSummary_2.setComplexityCoverage(1.678f);
-        jacocoDeltaCoverageResultSummary_2.setCoverageBetterThanPrevious(true);
 
         deltaHealthThresholds = new JacocoHealthReportDeltaThresholds("10.556", "0", "2.3434", "9.11457", "8.2525", "1.5556");
         //healthThresholds = new JacocoHealthReportThresholds(88, 100, 85, 100, 75, 90, 100, 100, 83, 95, 86, 92);
@@ -73,7 +71,7 @@ public class BuildOverBuildTest {
 
         PowerMock.verify(JacocoDeltaCoverageResultSummary.class);
 
-        Assert.assertEquals("Delta coverage is greater than delta health threshold values", Result.FAILURE, result);
+        Assert.assertEquals("Delta coverage is greater than delta health threshold values", Result.SUCCESS, result);
 
     }
 
@@ -85,7 +83,6 @@ public class BuildOverBuildTest {
         PowerMock.mockStatic(JacocoDeltaCoverageResultSummary.class);
         //noinspection ConstantConditions
         expect(JacocoDeltaCoverageResultSummary.build(anyObject(Run.class))).andReturn(jacocoDeltaCoverageResultSummary_2);
-        jacocoDeltaCoverageResultSummary_1.setCoverageBetterThanPrevious(true);
         //noinspection ConstantConditions
         expect(JacocoDeltaCoverageResultSummary.build(anyObject(Run.class))).andReturn(jacocoDeltaCoverageResultSummary_1);
 

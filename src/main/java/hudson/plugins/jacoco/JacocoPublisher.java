@@ -776,14 +776,12 @@ public class JacocoPublisher extends Recorder implements SimpleBuildStep {
                 + ", instruction: " + deltaCoverageResultSummary.getInstructionCoverage()
                 + ", complexity: " + deltaCoverageResultSummary.getComplexityCoverage());
 
-        if(Math.abs(deltaCoverageResultSummary.getInstructionCoverage()) <= deltaHealthReport.getDeltaInstruction() &&
-                Math.abs(deltaCoverageResultSummary.getBranchCoverage()) <= deltaHealthReport.getDeltaBranch() &&
-                Math.abs(deltaCoverageResultSummary.getComplexityCoverage()) <= deltaHealthReport.getDeltaComplexity() &&
-                Math.abs(deltaCoverageResultSummary.getLineCoverage()) <= deltaHealthReport.getDeltaLine() &&
-                Math.abs(deltaCoverageResultSummary.getMethodCoverage()) <= deltaHealthReport.getDeltaMethod() &&
-                Math.abs(deltaCoverageResultSummary.getClassCoverage()) <= deltaHealthReport.getDeltaClass())
-            return Result.SUCCESS;
-        else if(deltaCoverageResultSummary.isCoverageBetterThanPrevious())
+        if((deltaCoverageResultSummary.getInstructionCoverage() > 0 || Math.abs(deltaCoverageResultSummary.getInstructionCoverage()) <= deltaHealthReport.getDeltaInstruction()) &&
+                ( deltaCoverageResultSummary.getBranchCoverage() > 0 || Math.abs(deltaCoverageResultSummary.getBranchCoverage()) <= deltaHealthReport.getDeltaBranch()) &&
+                ( deltaCoverageResultSummary.getComplexityCoverage() > 0 || Math.abs(deltaCoverageResultSummary.getComplexityCoverage()) <= deltaHealthReport.getDeltaComplexity()) &&
+                ( deltaCoverageResultSummary.getLineCoverage() > 0 || Math.abs(deltaCoverageResultSummary.getLineCoverage()) <= deltaHealthReport.getDeltaLine()) &&
+                ( deltaCoverageResultSummary.getMethodCoverage() > 0 || Math.abs(deltaCoverageResultSummary.getMethodCoverage()) <= deltaHealthReport.getDeltaMethod()) &&
+                ( deltaCoverageResultSummary.getClassCoverage() > 0 || Math.abs(deltaCoverageResultSummary.getClassCoverage()) <= deltaHealthReport.getDeltaClass()))
             return Result.SUCCESS;
         else
             return Result.FAILURE;
@@ -826,40 +824,6 @@ public class JacocoPublisher extends Recorder implements SimpleBuildStep {
         public boolean isApplicable(Class<? extends AbstractProject> aClass) {
             return true;
         }
-		
-		/*@Override
-        public Publisher newInstance(StaplerRequest req, JSONObject json) throws FormException {
-            JacocoPublisher pub = new JacocoPublisher();
-            req.bindParameters(pub, "jacoco.");
-            req.bindParameters(pub.healthReports, "jacocoHealthReports.");
-            // start ugly hack
-            //@TODO remove ugly hack
-            // the default converter for integer values used by req.bindParameters
-            // defaults an empty value to 0. This happens even if the type is Integer
-            // and not int.  We want to change the default values, so we use this hack.
-            //
-            // If you know a better way, please fix.
-            if ("".equals(req.getParameter("jacocoHealthReports.maxClass"))) {
-                pub.healthReports.setMaxClass(100);
-            }
-            if ("".equals(req.getParameter("jacocoHealthReports.maxMethod"))) {
-                pub.healthReports.setMaxMethod(70);
-            }
-            if ("".equals(req.getParameter("jacocoHealthReports.maxLine"))) {
-                pub.healthReports.setMaxLine(70);
-            }
-            if ("".equals(req.getParameter("jacocoHealthReports.maxBranch"))) {
-                pub.healthReports.setMaxBranch(70);
-            }
-            if ("".equals(req.getParameter("jacocoHealthReports.maxInstruction"))) {
-                pub.healthReports.setMaxInstruction(70);
-            }
-            if ("".equals(req.getParameter("jacocoHealthReports.maxComplexity"))) {
-                pub.healthReports.setMaxComplexity(70);
-            }
-            // end ugly hack
-            return pub;
-        }*/
 
     }
 
@@ -892,5 +856,4 @@ public class JacocoPublisher extends Recorder implements SimpleBuildStep {
 
     }
 
-    //private static final Logger logger = Logger.getLogger(JacocoPublisher.class.getName());
 }
