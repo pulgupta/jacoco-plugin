@@ -163,7 +163,7 @@ THE SOFTWARE.
             <dependency>
                 <groupId>org.apache.maven.doxia</groupId>
                 <artifactId>doxia-site-renderer</artifactId>
-                <version>1.7.4</version>
+                <version>1.9.2</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.reporting</groupId>
